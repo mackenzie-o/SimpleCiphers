@@ -32,11 +32,18 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    /**
+     * Different fragments
+     */
+    private Fragment about = new AboutFragment(),
+                     caesar = new CaesarFragment(), 
+                     vigenere = new VigenereFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -51,9 +58,23 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, getSelectedTab(position+1))
                 .commit();
+    }
+    
+    public Fragment getSelectedTab(int selection){
+        switch (selection) {
+            case 1:
+                return about;
+            case 2:
+                return caesar;
+            case 3:
+                return vigenere;
+            default:
+                return null;
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -106,43 +127,49 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+    public static class AboutFragment extends Fragment {
+        
+        
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.about_fragment, container, false);
         }
-
-        public PlaceholderFragment() {
+        
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((MainActivity) activity).onSectionAttached(1);
         }
+    }
+
+    public static class CaesarFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+            return inflater.inflate(R.layout.caesar_fragment, container, false);
         }
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+            ((MainActivity) activity).onSectionAttached(2);
+        }
+    }
+
+    public static class VigenereFragment extends Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.vigenere_fragment, container, false);
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((MainActivity) activity).onSectionAttached(3);
         }
     }
 
