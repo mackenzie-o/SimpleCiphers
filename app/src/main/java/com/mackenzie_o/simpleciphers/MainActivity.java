@@ -8,15 +8,20 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 
 public class MainActivity extends ActionBarActivity
@@ -38,6 +43,8 @@ public class MainActivity extends ActionBarActivity
     private Fragment about = new AboutFragment(),
                      caesar = new CaesarFragment(), 
                      vigenere = new VigenereFragment();
+    
+    private static char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +133,19 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+    
+    public static void updateShift(String in, View fragment){
+        int num;
+        if(in.equals("")){
+            num=1;
+        }else{
+            num = Integer.parseInt(in);
+        }
+        CharSequence updatedText = "A -> "+ALPHABET[num%26];
+        TextView shiftIndicator = (TextView) fragment.findViewById(R.id.shiftIndicator);
+        shiftIndicator.setText(updatedText);
+        Log.v("I found!", in);
+    }
 
     public static class AboutFragment extends Fragment {
         
@@ -148,13 +168,44 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.caesar_fragment, container, false);
+            final View fragment = inflater.inflate(R.layout.caesar_fragment, container, false);
+            EditText shiftEntry = (EditText) fragment.findViewById(R.id.shiftNum);
+            shiftEntry.setOnEditorActionListener(new OnEditorActionListener()
+            {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+                {
+                    String input;
+                    if(actionId == EditorInfo.IME_ACTION_DONE)
+                    {
+                        input= v.getText().toString();
+                        MainActivity.updateShift(input, fragment);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            shiftEntry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    String input;
+                    EditText editText;
+
+                    if (!hasFocus) {
+                        editText = (EditText) v;
+                        input = editText.getText().toString();
+                        MainActivity.updateShift(input, fragment);
+                    }
+                }
+            });
+            return fragment;
         }
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(2);
+            
         }
     }
 
@@ -170,7 +221,7 @@ public class MainActivity extends ActionBarActivity
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(3);
+
         }
     }
-
 }

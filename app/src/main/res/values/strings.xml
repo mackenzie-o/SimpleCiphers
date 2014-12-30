@@ -9,5 +9,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
     <string name="action_settings">Settings</string>
+    <string name="preference_file_key">PREFERENCES</string>
+    <string name="about_body">This app contains stuff and things! Let me know if you find these stuffs and things unacceptable.
+    \n -types of ciphers
+    \n -descriptions
+    \n -contact information
+    \n -something about me</string>
 
 </resources>
