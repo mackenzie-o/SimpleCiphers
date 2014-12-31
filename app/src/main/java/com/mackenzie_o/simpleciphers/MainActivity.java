@@ -158,6 +158,18 @@ public class MainActivity extends ActionBarActivity
                 Integer.parseInt(shiftNum.getText().toString()),
                 !capitals.isChecked(), !characters.isChecked()));
     }
+    
+    public void computeVigenere(View view){
+        EditText plainText = (EditText) findViewById(R.id.vigenerePlainText);
+        TextView cipherText = (TextView) findViewById(R.id.vigenereCipherText);
+        EditText key = (EditText) findViewById(R.id.key);
+        //TODO: check key for special characters in key
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        cipherText.setText(ShiftCiphers.vigenereShift(plainText.getText().toString(),
+                key.getText().toString().toLowerCase(),
+                !capitals.isChecked(), !characters.isChecked()));
+    }
 
     public static class AboutFragment extends Fragment {
         

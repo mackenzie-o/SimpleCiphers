@@ -40,5 +40,23 @@ public class ShiftCiphers {
         }
         return newMessage;
     }
+
+    public static String vigenereShift(String message, String key,
+                                     boolean persistCaps, boolean keepCharacters){
+        String newMessage = "";
+        int keyLength = key.length();
+        int shiftKey[] = new int[key.length()];
+        int index = 0;
+        
+        for(int i=0; i<keyLength; i++){
+            shiftKey[i] = findPosition(key.charAt(i));
+        }
+        
+        for(int i=0; i<message.length(); i++){
+            newMessage += getChar(message.charAt(i), shiftKey[index], persistCaps, keepCharacters);
+            index = (index + 1) % keyLength;
+        }
+        return newMessage;
+    }
     
 }
