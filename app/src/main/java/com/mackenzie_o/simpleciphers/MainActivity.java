@@ -22,7 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.ToggleButton;
 
+import com.mackenzie_o.simpleciphers.ShiftCiphers;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -43,8 +45,7 @@ public class MainActivity extends ActionBarActivity
     private Fragment about = new AboutFragment(),
                      caesar = new CaesarFragment(), 
                      vigenere = new VigenereFragment();
-    
-    private static char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +142,21 @@ public class MainActivity extends ActionBarActivity
         }else{
             num = Integer.parseInt(in);
         }
-        CharSequence updatedText = "A -> "+ALPHABET[num%26];
+        CharSequence updatedText = "A -> "+ShiftCiphers.getChar('A', num, true, false);
         TextView shiftIndicator = (TextView) fragment.findViewById(R.id.shiftIndicator);
         shiftIndicator.setText(updatedText);
-        Log.v("I found!", in);
+        
+    }
+    
+    public void computeCaesarShift(View view){
+        EditText plainText = (EditText) findViewById(R.id.caesarPlainText);
+        TextView cipherText = (TextView) findViewById(R.id.caesarCipherText);
+        EditText shiftNum = (EditText) findViewById(R.id.shiftNum);
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        cipherText.setText(ShiftCiphers.caesarShift(plainText.getText().toString(),
+                Integer.parseInt(shiftNum.getText().toString()),
+                !capitals.isChecked(), !characters.isChecked()));
     }
 
     public static class AboutFragment extends Fragment {
