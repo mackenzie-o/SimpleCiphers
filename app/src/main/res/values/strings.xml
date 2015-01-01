@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Nav bar -->
     <string name="app_name">Simple Ciphers</string>
     <string name="title_section1">About</string>
     <string name="title_section2">Caesar Shift</string>
     <string name="title_section3">Vigenère</string>
+    <string name="title_section4">Autokey</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
     <string name="action_settings">Settings</string>
-    <string name="preference_file_key">PREFERENCES</string>
+    <!-- About -->
     <string name="about_body">This app contains stuff and things! Let me know if you find these stuffs and things unacceptable.
     \n -types of ciphers
     \n -descriptions
     \n -contact information
     \n -something about me</string>
+
+    <!-- Buttons -->
+    <string name="character_button_off">All \nSymbols</string>
+    <string name="character_button_on">Alphabet \nOnly</string>
+    <string name="case_button_off">Match \nCase</string>
+    <string name="case_button_on">Remove \nCase</string>
+    <string name="mode_encrypt">Encrypt \nMode</string>
+    <string name="mode_decrypt">Decrypt \nMode</string>
+    
+    <!-- Text Hints-->
+    <string name="plaintext_enter_hint">\tenter plaintext here</string>
+    <string name="ciphertext_display_hint">\tciphertext will be displayed here</string>
+    <string name="ciphertext_enter_hint">\tenter ciphertext here</string>
+    <string name="plaintext_display_hint">\tplaintext will be displayed here</string>
+    <string name="key_hint">keyword</string>
+    <string name="shift_num_hint">shift #</string>
 
 </resources>

@@ -34,7 +34,7 @@
             android:onClick="toggleMode"
             android:textOff="@string/mode_encrypt"
             android:textOn="@string/mode_decrypt"
-            android:id="@+id/vigenereModeToggle" />
+            android:id="@+id/autokeyModeToggle" />
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:paddingTop="@dimen/textbox_padding"
         android:paddingBottom="@dimen/textbox_padding"
         android:layout_weight="1"
-        android:id="@+id/vigenerePlainText"
+        android:id="@+id/autokeyPlainText"
         android:imeOptions="actionDone"
         android:hint="@string/plaintext_enter_hint"
         android:gravity="start"
@@ -73,9 +73,9 @@
         <Button
             android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:id="@+id/vigenereGo"
+            android:id="@+id/autokeyGo"
             android:text="Encrypt"
-            android:onClick="computeVigenere"
+            android:onClick="computeAutokey"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -92,7 +92,7 @@
         android:layout_weight="1"
         android:background="#E0E0E0"
         android:text="@string/ciphertext_display_hint"
-        android:id="@+id/vigenereCipherText"
+        android:id="@+id/autokeyCipherText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
