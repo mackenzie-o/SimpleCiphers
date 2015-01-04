@@ -25,12 +25,22 @@
     <string name="mode_encrypt">Encrypt \nMode</string>
     <string name="mode_decrypt">Decrypt \nMode</string>
     
-    <!-- Text Hints-->
+    <!-- Text Hints -->
     <string name="plaintext_enter_hint">\tenter plaintext here</string>
     <string name="ciphertext_display_hint">\tciphertext will be displayed here</string>
     <string name="ciphertext_enter_hint">\tenter ciphertext here</string>
     <string name="plaintext_display_hint">\tplaintext will be displayed here</string>
     <string name="key_hint">keyword</string>
     <string name="shift_num_hint">shift #</string>
+    
+    <!-- Errors & Notifications -->
+    <string name="key_fixed_notification">nonalphabetic characters removed from keyword</string>
+    <string name="empty_key_error">please enter a key</string>
+    
+    <!-- About Cipher Popup -->
+    <string name="about_title_base">About The </string>
+    <string name="about_caesar">This is a caesar cipher- it does things</string>
+    <string name="about_vigenere">This is a vigenere cipher- it does things</string>
+    <string name="about_autokey">This is an autokey cipher- it does things</string>
 
 </resources>

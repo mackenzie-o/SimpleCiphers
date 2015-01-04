@@ -1,31 +1,20 @@
 package com.mackenzie_o.simpleciphers;
 
-import android.app.Activity;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.mackenzie_o.simpleciphers.ShiftCiphers;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -44,16 +33,16 @@ public class MainActivity extends ActionBarActivity
      * Different fragments
      */
     private Fragment about = new AboutFragment(),
-                     caesar = new CaesarFragment(), 
-                     vigenere = new VigenereFragment(),
-                     autokey = new AutokeyFragment();
+            caesar = new CaesarFragment(),
+            vigenere = new VigenereFragment(),
+            autokey = new AutokeyFragment();
 
     /*Navigation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -63,16 +52,18 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        
+
         fragmentManager.beginTransaction()
-                .replace(R.id.container, getSelectedTab(position+1))
+                .replace(R.id.container, getSelectedTab(position + 1))
                 .commit();
     }
-    public Fragment getSelectedTab(int selection){
+
+    public Fragment getSelectedTab(int selection) {
         switch (selection) {
             case 1:
                 return about;
@@ -86,6 +77,7 @@ public class MainActivity extends ActionBarActivity
                 return null;
         }
     }
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -102,76 +94,64 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
     }
+
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
+            if (getSupportActionBar().getTitle().equals("About")){
+                getMenuInflater().inflate(R.menu.main, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.main_cipher, menu);
+            }
             return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
     
-    /*onClick Methods*/
-    public static void updateShiftIndicator(String in, View fragment){
-        int num;
-        if(in.equals("")){
-            num=1;
-        }else{
-            num = Integer.parseInt(in);
-        }
-        ToggleButton mode = (ToggleButton) fragment.findViewById(R.id.caesarModeToggle);
-        CharSequence updatedText = "\tA -> "+ShiftCiphers.getChar('A', num, true, false, !(mode.isChecked()));
-        TextView shiftIndicator = (TextView) fragment.findViewById(R.id.shiftIndicator);
-        shiftIndicator.setText(updatedText);
-        
-    }
     
-    public void toggleMode(View view){
+    /*onClick Methods*/
+    public void toggleMode(View view) {
         ToggleButton modeToggle;
         EditText plaintext;
         TextView ciphertext;
         Button goButton;
         boolean updateShiftIndicator = false;
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.caesarModeToggle:
-                modeToggle = (ToggleButton)findViewById(R.id.caesarModeToggle);
+                modeToggle = (ToggleButton) findViewById(R.id.caesarModeToggle);
                 plaintext = (EditText) findViewById(R.id.caesarPlainText);
                 ciphertext = (TextView) findViewById(R.id.caesarCipherText);
                 goButton = (Button) findViewById(R.id.caesarGo);
                 updateShiftIndicator = true;
                 break;
             case R.id.vigenereModeToggle:
-                modeToggle = (ToggleButton)findViewById(R.id.vigenereModeToggle);
+                modeToggle = (ToggleButton) findViewById(R.id.vigenereModeToggle);
                 plaintext = (EditText) findViewById(R.id.vigenerePlainText);
                 ciphertext = (TextView) findViewById(R.id.vigenereCipherText);
                 goButton = (Button) findViewById(R.id.vigenereGo);
                 break;
             case R.id.autokeyModeToggle:
-                modeToggle = (ToggleButton)findViewById(R.id.autokeyModeToggle);
+                modeToggle = (ToggleButton) findViewById(R.id.autokeyModeToggle);
                 plaintext = (EditText) findViewById(R.id.autokeyPlainText);
                 ciphertext = (TextView) findViewById(R.id.autokeyCipherText);
                 goButton = (Button) findViewById(R.id.autokeyGo);
@@ -179,27 +159,57 @@ public class MainActivity extends ActionBarActivity
             default:
                 return;
         }
-        //TODO: if there is text in the ciphertext box- put it in the plaintext box
-        if(modeToggle.isChecked()){ //change to decrypt mode 
+        if (modeToggle.isChecked()) { //change to decrypt mode
             plaintext.setHint(R.string.ciphertext_enter_hint);
             ciphertext.setText(R.string.plaintext_display_hint);
             goButton.setText("Decrypt");
-            if(updateShiftIndicator){
+            if (updateShiftIndicator) {
                 ((TextView) findViewById(R.id.shiftIndicator)).setText("\tA -> Z");
                 ((EditText) findViewById(R.id.shiftNum)).setText("");
             }
-        }else{                      //change to encrypt mode
+        } else {                      //change to encrypt mode
             plaintext.setHint(R.string.plaintext_enter_hint);
             ciphertext.setText(R.string.ciphertext_display_hint);
             goButton.setText("Encrypt");
-            if(updateShiftIndicator){
+            if (updateShiftIndicator) {
                 ((TextView) findViewById(R.id.shiftIndicator)).setText("\tA -> B");
                 ((EditText) findViewById(R.id.shiftNum)).setText("");
             }
         }
     }
     
-    public void computeCaesarShift(View view){
+
+    public void createAboutDialog(MenuItem menu) {
+        Bundle args = new Bundle();
+        args.putString("title", "About The "+mTitle.toString()+" Cipher");
+        String message;
+        switch (mTitle.toString()){
+            case "Caesar Shift":
+                message = getString(R.string.about_caesar);
+                break;
+            case "Vigenère":
+                message = getString(R.string.about_vigenere);
+                break;
+            default:
+                message = getString(R.string.about_autokey);
+        }
+        args.putString("body", message);
+        DialogFragment newFragment = new AboutDialogFragment();
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "about");
+    }
+
+    public String checkKey(String key) {
+        String cleanedKey = ShiftCiphers.removeNonalphabeticChars(key);
+        if (!cleanedKey.equals(key)) {
+            Toast.makeText(getApplicationContext(), R.string.key_fixed_notification,
+                    Toast.LENGTH_SHORT).show();
+        }
+        return cleanedKey;
+    }
+    
+    /* Compute Methods */
+    public void computeCaesarShift(View view) {
         EditText plainText = (EditText) findViewById(R.id.caesarPlainText);
         TextView cipherText = (TextView) findViewById(R.id.caesarCipherText);
         EditText shiftNum = (EditText) findViewById(R.id.shiftNum);
@@ -208,128 +218,39 @@ public class MainActivity extends ActionBarActivity
         ToggleButton mode = (ToggleButton) findViewById(R.id.caesarModeToggle);
         cipherText.setText(ShiftCiphers.caesarShift(plainText.getText().toString(),
                 Integer.parseInt(shiftNum.getText().toString()),
-                !capitals.isChecked(), !characters.isChecked(), !mode.isChecked())); //TODO: check mode
+                !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
-    
-    public void computeVigenere(View view){
-        EditText plainText = (EditText) findViewById(R.id.vigenerePlainText);
-        TextView cipherText = (TextView) findViewById(R.id.vigenereCipherText);
+    public void computeVigenere(View view) {
         EditText key = (EditText) findViewById(R.id.key);
-        //TODO: check key for special characters in key
-        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
-        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
-        ToggleButton mode = (ToggleButton) findViewById(R.id.vigenereModeToggle);
-        cipherText.setText(ShiftCiphers.vigenereShift(plainText.getText().toString(),
-                key.getText().toString().toLowerCase(),
-                !capitals.isChecked(), !characters.isChecked(), !mode.isChecked())); //TODO: check mode
+        String keyText = checkKey(key.getText().toString().toLowerCase());
+        if(keyText.length()>0) {
+            EditText plainText = (EditText) findViewById(R.id.vigenerePlainText);
+            TextView cipherText = (TextView) findViewById(R.id.vigenereCipherText);
+            ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+            ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+            ToggleButton mode = (ToggleButton) findViewById(R.id.vigenereModeToggle);
+            cipherText.setText(ShiftCiphers.vigenereShift(plainText.getText().toString(),
+                    keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
-    
-    public void computeAutokey(View view){
-        EditText plainText = (EditText) findViewById(R.id.autokeyPlainText);
-        TextView cipherText = (TextView) findViewById(R.id.autokeyCipherText);
+    public void computeAutokey(View view) {
         EditText key = (EditText) findViewById(R.id.key);
-        //TODO: check key for special characters in key
-        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
-        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
-        ToggleButton mode = (ToggleButton) findViewById(R.id.autokeyModeToggle);
-        cipherText.setText(ShiftCiphers.autokeyShift(plainText.getText().toString(),
-                key.getText().toString().toLowerCase(),
-                !capitals.isChecked(), !characters.isChecked(), !mode.isChecked())); //TODO: check mode
-        
-    }
-
-    /*Fragments*/
-    public static class AboutFragment extends Fragment {
-        
-        
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.about_fragment, container, false);
-        }
-        
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(1);
-        }
-    }
-
-    public static class CaesarFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            final View fragment = inflater.inflate(R.layout.caesar_fragment, container, false);
-            EditText shiftEntry = (EditText) fragment.findViewById(R.id.shiftNum);
-            shiftEntry.setOnEditorActionListener(new OnEditorActionListener()
-            {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-                {
-                    String input;
-                    if(actionId == EditorInfo.IME_ACTION_DONE)
-                    {
-                        input= v.getText().toString();
-                        MainActivity.updateShiftIndicator(input, fragment);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            shiftEntry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    String input;
-                    EditText editText;
-
-                    if (!hasFocus) {
-                        editText = (EditText) v;
-                        input = editText.getText().toString();
-                        MainActivity.updateShiftIndicator(input, fragment);
-                    }
-                }
-            });
-            return fragment;
+        String keyText = checkKey(key.getText().toString().toLowerCase());
+        if(keyText.length()>0) {
+            EditText plainText = (EditText) findViewById(R.id.autokeyPlainText);
+            TextView cipherText = (TextView) findViewById(R.id.autokeyCipherText);
+            ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+            ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+            ToggleButton mode = (ToggleButton) findViewById(R.id.autokeyModeToggle);
+            cipherText.setText(ShiftCiphers.autokeyShift(plainText.getText().toString(),
+                    keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
         }
 
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(2);
-            
-        }
-    }
-
-    public static class VigenereFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.vigenere_fragment, container, false);
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(3);
-
-        }
-    }
-    
-    public static class AutokeyFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.autokey_fragment, container, false);
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(4);
-
-        }
     }
 }

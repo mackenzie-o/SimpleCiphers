@@ -19,6 +19,14 @@ public class ShiftCiphers {
         }
         return false;
     }
+    public static String removeNonalphabeticChars(String in){
+        char [] input = in.toLowerCase().toCharArray();
+        String out = "";
+        for(int i=0; i<input.length ; i++){
+            if(findIndex(input[i]) != -1) out += input[i];
+        }
+        return out;
+    } 
     private static int getNewIndex(int startIndex, int shift, boolean encode){
         int endIndex;
         if(!encode) shift*=-1;
@@ -70,7 +78,27 @@ public class ShiftCiphers {
 
     public static String autokeyShift(String message, String key,
                                       boolean persistCaps, boolean keepCharacters, boolean encode){
-        return vigenereShift(message, key+message, persistCaps, keepCharacters, encode);
+        if(encode) {
+            return vigenereShift(message, key + message, persistCaps, keepCharacters, encode);
+        }else {
+            String newMessage = "";
+            int shiftKey[] = new int[(message+key).length()];
+            int index = key.length();
+            
+            for(int i=0; i<index; i++){
+                shiftKey[i] = findIndex(key.charAt(i));
+            }
+            
+            String cur;
+
+            for(int i=0; i<message.length(); i++){
+                cur = getChar(message.charAt(i), shiftKey[i], persistCaps, keepCharacters, encode);
+                newMessage += cur;
+                shiftKey[index] = findIndex(cur.charAt(0));
+                index++;
+            }
+            return newMessage;
+        }
     }
     
 }
