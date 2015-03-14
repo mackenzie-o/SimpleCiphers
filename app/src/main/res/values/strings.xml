@@ -39,12 +39,35 @@
     
     <!-- About Cipher Popup -->
     <string name="about_title_base">About The </string>
-    <string name="about_caesar">This is a caesar cipher- it does things</string>
-    <string name="about_vigenere">This is a vigenere cipher- it does things</string>
-    <string name="about_autokey">This is an autokey cipher- it does things</string>
-    <string name="about_keyword">This is a keyword cipher- it does things</string>
-    <string name="about_affine">This is an affine cipher- it does things</string>
-    
+    <string name="about_caesar">Caesar\'s Cipher (also known as a shift cipher) is a simple substitution cipher.
+        To encrypt, each letter is replaced by the letter n positions to the right. For a shift of 2, a becomes c,
+        b becomes d, and so on. To decrypt, each letter is moved n positions to the left. \n\nMore info: wikipedia.org/wiki/Caesar_cipher
+    </string>
+    <string name="about_vigenere">The Vigenère Cipher is simple polyalphabetic substitution cipher based on a keyword.
+        The cipher is basically a series of Caesar shifts, where each letter of the keyword corresponds to the shift amount
+        : a is a shift of 0, b is a shift of 1, and so on. The keyword is repeated, so for a three letter key \'abc\', every
+        three letters starting with the first is shifted by \'a\', every three letters starting with the second is shifted by
+        \'b\', and every three letters starting with the third is shifted by \'c\'. \n\nMore info: wikipedia.org/wiki/Vigenère_cipher
+    </string>
+    <string name="about_autokey">The Autokey Cipher is a polyalphabetic substitution cipher. (Note: this implementation is a 
+        text-autokey cipher, as opposed to a key-autokey cipher.) The cipher is essentially a Vigenère Cipher, but instead 
+        of repeating the keyword over the entire message, (which leads to vulnerabilities if an attacker can guess the key length)
+        the plaintext is appended to the keyword. The message is then encoded like a normal Vigenère Cipher. When decoding the 
+        ciphertext, each character is decoded normally, and then appended to the key for use later on. \n\nMore info: wikipedia.org/wiki/Autokey_cipher
+    </string>
+    <string name="about_keyword">The Keyword Cipher is a simple monoalphabetic substitution cipher. It creates a
+        cipher alphabet based on a keyword. The keyword is the start of the cipher alphabet, with all letters unused by the keyword
+        following in their typical order. For example, the cipher alphabet created by the keyword \'now\' would be NOWABCDEFGHIJKLMPQRSTUVXYZ,
+        where a would be mapped to n, b would be mapped to o, and so on. \n\nMore info: wikipedia.org/wiki/Keyword_cipher
+        </string>
+    <string name="about_affine">The Affine Cipher is a monoalphabetic substitution cipher. It maps letters to other letters following
+        the formula (ax+b)mod(26), where a is represented as 0, b as 1, and so on. To decode, the equation c(x-b)mod(26), where c is the
+        modular multiplicative inverse of a mod(26). In order to find this inverse, a and 26 (the size of the alphabet, for english, 26)
+        must be coprime. As a result the options for a in the english alphabet are 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25.\n
+        It is worth noting that an encryption where a=1 is equivalent to a Caesar Shift of b, and an encryption where a=b=(26-1) is also
+        known as the Atbash Cipher. \n\nMore info: wikipedia.org/wiki/Affine_cipher
+    </string>
+
     <!-- Dropdown Options -->
     <string-array name="multiplier_array">
         <item>1</item>
