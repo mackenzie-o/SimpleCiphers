@@ -7,6 +7,7 @@
     <string name="title_section3">Vigenère</string>
     <string name="title_section4">Autokey</string>
     <string name="title_section5">Keyword</string>
+    <string name="title_section6">Affine</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
@@ -29,6 +30,7 @@
     <string name="plaintext_display_hint">\tplaintext will be displayed here</string>
     <string name="key_hint">keyword</string>
     <string name="shift_num_hint">shift #</string>
+    <string name="affine_multi_hint">select a multiplier</string>
     
     <!-- Errors & Notifications -->
     <string name="key_fixed_notification">nonalphabetic characters removed from keyword</string>
@@ -41,5 +43,22 @@
     <string name="about_vigenere">This is a vigenere cipher- it does things</string>
     <string name="about_autokey">This is an autokey cipher- it does things</string>
     <string name="about_keyword">This is a keyword cipher- it does things</string>
+    <string name="about_affine">This is an affine cipher- it does things</string>
+    
+    <!-- Dropdown Options -->
+    <string-array name="multiplier_array">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>7</item>
+        <item>9</item>
+        <item>11</item>
+        <item>15</item>
+        <item>17</item>
+        <item>19</item>
+        <item>21</item>
+        <item>23</item>
+        <item>25</item>
+    </string-array>
 
 </resources>

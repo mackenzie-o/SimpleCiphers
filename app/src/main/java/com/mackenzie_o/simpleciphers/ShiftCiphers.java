@@ -14,8 +14,9 @@ public class ShiftCiphers {
         return -1;
     }
     private static boolean isCapitalized(char in){
-        for(int i=0; i<26; i++){
-            if(UPPER_ALPHABET[i]==in) return true;
+        String input = ""+in;
+        if(input.toLowerCase() != input){
+            return true;
         }
         return false;
     }
@@ -99,6 +100,58 @@ public class ShiftCiphers {
             }
             return newMessage;
         }
+    }
+
+    public static String affineShift(String message, int a, int b,
+                                      boolean persistCaps, boolean keepCharacters, boolean encode){
+        if(!persistCaps) message = message.toLowerCase();
+        String out = "";
+        for(int i = 0; i < message.length(); i++){
+            out += getAffineChar(message.charAt(i), a, b, keepCharacters, encode);
+        }
+        return out;
+    }
+    
+    public static String getAffineChar(char in, int a, int b, 
+                                       boolean keepCharacters, boolean encode){
+        boolean isCapitalized = isCapitalized(in);
+        int index = findIndex(in);
+        if(index == -1){
+            if (keepCharacters) return in+"";
+            else return "";
+        }else if(encode){
+            if(isCapitalized) return UPPER_ALPHABET[(a*index + b)%26]+"";
+            else return ALPHABET[(a*index + b)%26]+"";
+        }else{ //TODO: FIX
+            int inverse = modMultiInverse(a);
+            int newIndex = (inverse*(index - b))%26;
+            if(newIndex < 0){
+                newIndex+=26;
+            }
+            if(isCapitalized) return UPPER_ALPHABET[newIndex]+"";
+            else return ALPHABET[newIndex]+"";
+        }
+    }
+    public static int modMultiInverse(int A) {
+        int b = 26;
+        int a = A, s = 1, t = 0, u = 0, v = 1;
+        int r, q, newu, newv;
+        while (b != 0) {
+            r = a % b;
+            q = a / b;
+            a = b;
+            b = r;
+            newu = s - u * q;
+            newv = t - v * q;
+            s = u;
+            t = v;
+            u = newu;
+            v = newv;
+        }
+        if (s < 0){
+            return b+s;
+        }
+        return s;
     }
     
 }

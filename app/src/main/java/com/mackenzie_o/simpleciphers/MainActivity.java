@@ -12,6 +12,7 @@ import android.view.View;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -38,7 +39,8 @@ public class MainActivity extends ActionBarActivity
             caesar = new CaesarFragment(),
             vigenere = new VigenereFragment(),
             autokey = new AutokeyFragment(),
-            keyword = new KeywordFragment();
+            keyword = new KeywordFragment(),
+            affine = new AffineFragment();
     
 
     /*Navigation*/
@@ -79,6 +81,8 @@ public class MainActivity extends ActionBarActivity
                 return autokey;
             case 5:
                 return keyword;
+            case 6:
+                return affine;
             default:
                 return null;
         }
@@ -100,6 +104,10 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);
+                break;
+            case 6:
+                mTitle = getString(R.string.title_section6);
+                break;
         }
     }
 
@@ -170,6 +178,12 @@ public class MainActivity extends ActionBarActivity
                 ciphertext = (TextView) findViewById(R.id.keywordCipherText);
                 goButton = (Button) findViewById(R.id.keywordGo);
                 break;
+            case R.id.affineModeToggle:
+                modeToggle = (ToggleButton) findViewById(R.id.affineModeToggle);
+                plaintext = (EditText) findViewById(R.id.affinePlainText);
+                ciphertext = (TextView) findViewById(R.id.affineCipherText);
+                goButton = (Button) findViewById(R.id.affineGo);
+                break;
             default:
                 return;
         }
@@ -208,6 +222,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case "Keyword":
                 message = getString(R.string.about_keyword);
+                break;
+            case "Affine":
+                message = getString(R.string.about_affine);
                 break;
             default:
                message = "I made a mistake. Sorry...";
@@ -311,6 +328,24 @@ public class MainActivity extends ActionBarActivity
                     keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
         } else {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void computeAffineShift(View view) {
+        Spinner selection = (Spinner) findViewById(R.id.multi_spinner);
+        EditText plainText = (EditText) findViewById(R.id.affinePlainText);
+        TextView cipherText = (TextView) findViewById(R.id.affineCipherText);
+        EditText shiftNum = (EditText) findViewById(R.id.shiftNum);
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        ToggleButton mode = (ToggleButton) findViewById(R.id.affineModeToggle);
+        if(checkInt(shiftNum)){
+            cipherText.setText(ShiftCiphers.affineShift(plainText.getText().toString(),
+                    Integer.parseInt(selection.getSelectedItem().toString()),
+                    Integer.parseInt(shiftNum.getText().toString()),
+                    !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.bad_int_error,
                     Toast.LENGTH_SHORT).show();
         }
     }

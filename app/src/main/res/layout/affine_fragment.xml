@@ -1,0 +1,107 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ToggleButton
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:textOff="@string/character_button_off"
+            android:textOn="@string/character_button_on"
+            android:id="@+id/characterToggle" />
+
+        <ToggleButton
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:textOff="@string/case_button_off"
+            android:textOn="@string/case_button_on"
+            android:id="@+id/caseToggle" />
+
+        <ToggleButton
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:onClick="toggleMode"
+            android:textOff="@string/mode_encrypt"
+            android:textOn="@string/mode_decrypt"
+            android:id="@+id/affineModeToggle" />
+
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/textbox_padding"
+        android:layout_marginBottom="@dimen/textbox_padding"
+        android:paddingTop="@dimen/textbox_padding"
+        android:paddingBottom="@dimen/textbox_padding"
+        android:layout_weight="1"
+        android:id="@+id/affinePlainText"
+        android:imeOptions="actionDone"
+        android:hint="@string/plaintext_enter_hint"
+        android:gravity="start"
+        android:background="#E0E0E0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multi_spinner"
+            android:entries="@array/multiplier_array"
+            android:prompt="@string/affine_multi_hint"
+            android:layout_weight="0.5"/>
+
+        <EditText
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="@string/shift_num_hint"
+            android:gravity="center"
+            android:id="@+id/shiftNum"
+            android:imeOptions="actionDone"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/textbox_padding"
+            android:layout_marginRight="@dimen/textbox_padding" />
+
+        <Button
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/affineGo"
+            android:text="Encrypt"
+            android:onClick="computeAffineShift"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/textbox_padding"
+        android:layout_marginBottom="@dimen/textbox_padding"
+        android:paddingTop="@dimen/textbox_padding"
+        android:paddingBottom="@dimen/textbox_padding"
+        android:selectAllOnFocus="true"
+        android:textIsSelectable="true"
+        android:layout_weight="1"
+        android:background="#E0E0E0"
+        android:text="@string/ciphertext_display_hint"
+        android:id="@+id/affineCipherText"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+</LinearLayout>
