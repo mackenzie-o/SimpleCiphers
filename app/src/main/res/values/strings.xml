@@ -12,8 +12,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
     <string name="action_settings">Settings</string>
+    
     <!-- About -->
     <string name="app_title">Simple \n\t\tCiphers</string>
+    <string name="author">By MacKenzie O\'Bleness</string>
 
     <!-- Buttons -->
     <string name="character_button_off">All \nSymbols</string>
@@ -36,6 +38,7 @@
     <string name="key_fixed_notification">nonalphabetic characters removed from keyword</string>
     <string name="empty_key_error">please enter a key</string>
     <string name="bad_int_error">please enter a whole number</string>
+    <string name="no_message_error">please enter a message</string>
     
     <!-- About Cipher Popup -->
     <string name="about_title_base">About The </string>

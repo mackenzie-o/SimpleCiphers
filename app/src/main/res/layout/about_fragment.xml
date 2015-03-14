@@ -21,7 +21,7 @@
             android:textStyle="bold"
             android:textColor="#00968d"
             android:layout_gravity="center"
-            android:onClick="aboutCipher"
+            android:onClick="aboutTitle"
             android:id="@+id/appTitle" />
         
         </LinearLayout>
@@ -35,12 +35,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="By MacKenzie O'Bleness"
+            android:text="@string/author"
             android:textSize="25sp"
             android:layout_gravity="top"
             android:gravity="center"
             android:layout_weight=".6"
-            android:id="@+id/textView2"/>
+            android:onClick="aboutAuthor"
+            android:id="@+id/author"/>
         
         <TextView
             android:layout_width="wrap_content"
