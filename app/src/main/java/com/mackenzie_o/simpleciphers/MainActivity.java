@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.Random;
+
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -35,7 +37,9 @@ public class MainActivity extends ActionBarActivity
     private Fragment about = new AboutFragment(),
             caesar = new CaesarFragment(),
             vigenere = new VigenereFragment(),
-            autokey = new AutokeyFragment();
+            autokey = new AutokeyFragment(),
+            keyword = new KeywordFragment();
+    
 
     /*Navigation*/
     @Override
@@ -73,6 +77,8 @@ public class MainActivity extends ActionBarActivity
                 return vigenere;
             case 4:
                 return autokey;
+            case 5:
+                return keyword;
             default:
                 return null;
         }
@@ -92,6 +98,8 @@ public class MainActivity extends ActionBarActivity
             case 4:
                 mTitle = getString(R.string.title_section4);
                 break;
+            case 5:
+                mTitle = getString(R.string.title_section5);
         }
     }
 
@@ -156,6 +164,12 @@ public class MainActivity extends ActionBarActivity
                 ciphertext = (TextView) findViewById(R.id.autokeyCipherText);
                 goButton = (Button) findViewById(R.id.autokeyGo);
                 break;
+            case R.id.keywordModeToggle:
+                modeToggle = (ToggleButton) findViewById(R.id.keywordModeToggle);
+                plaintext = (EditText) findViewById(R.id.keywordPlainText);
+                ciphertext = (TextView) findViewById(R.id.keywordCipherText);
+                goButton = (Button) findViewById(R.id.keywordGo);
+                break;
             default:
                 return;
         }
@@ -177,7 +191,6 @@ public class MainActivity extends ActionBarActivity
             }
         }
     }
-    
 
     public void createAboutDialog(MenuItem menu) {
         Bundle args = new Bundle();
@@ -190,8 +203,14 @@ public class MainActivity extends ActionBarActivity
             case "Vigenère":
                 message = getString(R.string.about_vigenere);
                 break;
-            default:
+            case "Autokey":
                 message = getString(R.string.about_autokey);
+                break;
+            case "Keyword":
+                message = getString(R.string.about_keyword);
+                break;
+            default:
+               message = "I made a mistake. Sorry...";
         }
         args.putString("body", message);
         DialogFragment newFragment = new AboutDialogFragment();
@@ -208,6 +227,28 @@ public class MainActivity extends ActionBarActivity
         return cleanedKey;
     }
     
+    public boolean checkInt(EditText num){
+        try{
+            Integer.parseInt(num.getText().toString());
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+        
+    }
+    
+    public void aboutCipher(View view){
+        TextView title = (TextView) findViewById(R.id.appTitle);
+        String titleContent = title.getText().toString();
+        Random rand = new Random();
+        if(titleContent == getString(R.string.app_title)){
+            title.setText(ShiftCiphers.caesarShift(getString(R.string.app_title), rand.nextInt(25)+1,
+                    true, true, true));
+        }else{
+            title.setText(getString(R.string.app_title));
+        }
+    }
+    
     /* Compute Methods */
     public void computeCaesarShift(View view) {
         EditText plainText = (EditText) findViewById(R.id.caesarPlainText);
@@ -216,9 +257,14 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.caesarModeToggle);
-        cipherText.setText(ShiftCiphers.caesarShift(plainText.getText().toString(),
-                Integer.parseInt(shiftNum.getText().toString()),
-                !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        if(checkInt(shiftNum)){
+            cipherText.setText(ShiftCiphers.caesarShift(plainText.getText().toString(),
+                    Integer.parseInt(shiftNum.getText().toString()),
+                    !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.bad_int_error,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
     public void computeVigenere(View view) {
         EditText key = (EditText) findViewById(R.id.key);
@@ -251,6 +297,21 @@ public class MainActivity extends ActionBarActivity
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
         }
-
+    }
+    public void computeKeyword(View view) {
+        EditText key = (EditText) findViewById(R.id.key);
+        String keyText = checkKey(key.getText().toString().toLowerCase());
+        if(keyText.length()>0) {
+            EditText plainText = (EditText) findViewById(R.id.keywordPlainText);
+            TextView cipherText = (TextView) findViewById(R.id.keywordCipherText);
+            ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+            ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+            ToggleButton mode = (ToggleButton) findViewById(R.id.keywordModeToggle);
+            cipherText.setText(SubstitutionCiphers.keyword(plainText.getText().toString(),
+                    keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
