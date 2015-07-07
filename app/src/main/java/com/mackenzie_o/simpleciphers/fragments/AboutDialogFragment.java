@@ -1,4 +1,4 @@
-package com.mackenzie_o.simpleciphers;
+package com.mackenzie_o.simpleciphers.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

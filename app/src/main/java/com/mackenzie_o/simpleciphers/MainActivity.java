@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.mackenzie_o.simpleciphers.ciphers.*;
+import com.mackenzie_o.simpleciphers.fragments.*;
+
 import java.util.Random;
 
 public class MainActivity extends ActionBarActivity
@@ -236,7 +239,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public String checkKey(String key) {
-        String cleanedKey = ShiftCiphers.removeNonalphabeticChars(key);
+        String cleanedKey = Ciphers.removeNonalphabeticChars(key);
         if (!cleanedKey.equals(key)) {
             Toast.makeText(getApplicationContext(), R.string.key_fixed_notification,
                     Toast.LENGTH_SHORT).show();
@@ -259,7 +262,7 @@ public class MainActivity extends ActionBarActivity
         String titleContent = title.getText().toString();
         Random rand = new Random();
         if(titleContent == getString(R.string.app_title)){
-            title.setText(ShiftCiphers.caesarShift(getString(R.string.app_title), rand.nextInt(25)+1,
+            title.setText(Caesar.caesarShift(getString(R.string.app_title), rand.nextInt(25)+1,
                     true, true, true));
         }else{
             title.setText(getString(R.string.app_title));
@@ -272,7 +275,7 @@ public class MainActivity extends ActionBarActivity
         Random rand = new Random();
         String [] keys = {"me", "myself", "andi"};
         if(titleContent == getString(R.string.author)){
-            title.setText(ShiftCiphers.autokeyShift(getString(R.string.author), keys[rand.nextInt(3)],
+            title.setText(Autokey.autokeyShift(getString(R.string.author), keys[rand.nextInt(3)],
                     true, true, true));
         }else{
             title.setText(getString(R.string.author));
@@ -287,16 +290,16 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.caesarModeToggle);
-        if(checkInt(shiftNum)){
+        if(!checkInt(shiftNum)){
             Toast.makeText(getApplicationContext(), R.string.bad_int_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length()>0){
+        } else if (plainText.getText().toString().length() == 0){
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        cipherText.setText(ShiftCiphers.caesarShift(plainText.getText().toString(),
+        cipherText.setText(Caesar.caesarShift(plainText.getText().toString(),
                 Integer.parseInt(shiftNum.getText().toString()),
                 !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
@@ -308,16 +311,16 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.vigenereModeToggle);
-        if(keyText.length()>0) {
+        if(keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length()>0) {
+        } else if (plainText.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        cipherText.setText(ShiftCiphers.vigenereShift(plainText.getText().toString(),
+        cipherText.setText(Vigenere.vigenereShift(plainText.getText().toString(),
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
     public void computeAutokey(View view) {
@@ -328,16 +331,16 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.autokeyModeToggle);
-        if(keyText.length()>0) {
+        if(keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length()>0) {
+        } else if (plainText.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        cipherText.setText(ShiftCiphers.autokeyShift(plainText.getText().toString(),
+        cipherText.setText(Autokey.autokeyShift(plainText.getText().toString(),
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
 
     }
@@ -349,16 +352,16 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.keywordModeToggle);
-        if(keyText.length()>0) {
+        if(keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length()>0) {
+        } else if (plainText.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        cipherText.setText(SubstitutionCiphers.keyword(plainText.getText().toString(),
+        cipherText.setText(Keyword.keywordCipher(plainText.getText().toString(),
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
     public void computeAffineShift(View view) {
@@ -369,16 +372,16 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.affineModeToggle);
-        if(checkInt(shiftNum)) {
+        if(!checkInt(shiftNum)) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length()>0) {
+        } else if (plainText.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        cipherText.setText(ShiftCiphers.affineShift(plainText.getText().toString(),
+        cipherText.setText(Affine.affineShift(plainText.getText().toString(),
                 Integer.parseInt(selection.getSelectedItem().toString()),
                 Integer.parseInt(shiftNum.getText().toString()),
                 !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));

@@ -1,4 +1,4 @@
-package com.mackenzie_o.simpleciphers;
+package com.mackenzie_o.simpleciphers.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.mackenzie_o.simpleciphers.MainActivity;
+import com.mackenzie_o.simpleciphers.R;
 
 /**
  * Created by MacKenzie_2 on 1/3/2015.

@@ -1,4 +1,4 @@
-package com.mackenzie_o.simpleciphers;
+package com.mackenzie_o.simpleciphers.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mackenzie_o.simpleciphers.MainActivity;
+import com.mackenzie_o.simpleciphers.R;
 
 /**
  * Created by MacKenzie_2 on 2/09/2015.
