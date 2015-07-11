@@ -1,11 +1,10 @@
-package com.mackenzie_o.simpleciphers.fragments;
+package com.mackenzie_o.simpleciphers.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 
 
 public class AboutDialogFragment extends DialogFragment {

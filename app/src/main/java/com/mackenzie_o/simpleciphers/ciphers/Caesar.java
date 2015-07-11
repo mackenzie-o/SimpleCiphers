@@ -20,17 +20,16 @@ public class Caesar extends Ciphers {
 
     // gets the resulting character after applying a shift with the given options
     public static String getChar(char in, int shift, boolean persistCaps, boolean keepCharacters, boolean encode) {
-        // TODO: find a better way to convert a character to lowercase
-        int startingPosition = findIndex(("" + in).toLowerCase().charAt(0));
+        int startingPosition = findIndex(in);
 
         if (startingPosition == -1) { // char is non-alphabetic
-            if (keepCharacters) return "" + in;
+            if (keepCharacters) return charToString(in);
             else return "";
         }
         if (persistCaps && isCapitalized(in)) {
-            return "" + UPPER_ALPHABET[getNewIndex(startingPosition, shift, encode)];
+            return charToString(UPPER_ALPHABET[getNewIndex(startingPosition, shift, encode)]);
         }
-        return "" + ALPHABET[getNewIndex(startingPosition, shift, encode)];
+        return charToString(ALPHABET[getNewIndex(startingPosition, shift, encode)]);
     }
 
     // applies a caesar shift on the provided string with the given options and returns the result

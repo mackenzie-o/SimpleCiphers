@@ -1,4 +1,4 @@
-package com.mackenzie_o.simpleciphers.fragments;
+package com.mackenzie_o.simpleciphers.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.ToggleButton;
 
 import com.mackenzie_o.simpleciphers.MainActivity;
 import com.mackenzie_o.simpleciphers.R;
-import com.mackenzie_o.simpleciphers.ciphers.ShiftCiphers;
+import com.mackenzie_o.simpleciphers.ciphers.Caesar;
 
 /**
  * Created by MacKenzie_2 on 1/3/2015.
@@ -72,7 +72,7 @@ public class CaesarFragment extends Fragment {
             num = Integer.parseInt(in);
         }
         ToggleButton mode = (ToggleButton) fragment.findViewById(R.id.caesarModeToggle);
-        CharSequence updatedText = "\tA -> "+ ShiftCiphers.getChar('A', num, true, false, !(mode.isChecked()));
+        CharSequence updatedText = "\tA -> "+ Caesar.getChar('A', num, true, false, !(mode.isChecked()));
         TextView shiftIndicator = (TextView) fragment.findViewById(R.id.shiftIndicator);
         shiftIndicator.setText(updatedText);
 

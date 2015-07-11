@@ -29,23 +29,24 @@ public class Affine extends Ciphers {
         boolean isCapitalized = isCapitalized(in);
         int index = findIndex(in);
         if (index == -1) {
-            if (keepCharacters) return in + "";
+            if (keepCharacters) return charToString(in);
             else return "";
         } else if (encode) {
-            if (isCapitalized) return UPPER_ALPHABET[(a * index + b) % 26] + "";
-            else return ALPHABET[(a * index + b) % 26] + "";
+            if (isCapitalized) return charToString(UPPER_ALPHABET[(a * index + b) % 26]);
+            else return charToString(ALPHABET[(a * index + b) % 26]);
         } else { // TODO: fixed?
             int inverse = modMultiInverse(a);
             int newIndex = (inverse * (index - b)) % 26;
             if (newIndex < 0) {
                 newIndex += 26;
             }
-            if (isCapitalized) return UPPER_ALPHABET[newIndex] + "";
-            else return ALPHABET[newIndex] + "";
+            if (isCapitalized) return charToString(UPPER_ALPHABET[newIndex]);
+            else return charToString(ALPHABET[newIndex]);
         }
     }
 
     // gets the multiplicative inverse of an integer
+    // TODO: confirm that BigIntegers won't cause performance issues or implement natively
     public static int modMultiInverse(int A) {
         BigInteger a = BigInteger.valueOf(A);
         BigInteger twentySix = BigInteger.valueOf(26);

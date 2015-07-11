@@ -1,4 +1,4 @@
-package com.mackenzie_o.simpleciphers.fragments;
+package com.mackenzie_o.simpleciphers.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;

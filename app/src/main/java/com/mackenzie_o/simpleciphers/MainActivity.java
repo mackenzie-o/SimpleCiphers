@@ -18,7 +18,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.mackenzie_o.simpleciphers.ciphers.*;
-import com.mackenzie_o.simpleciphers.fragments.*;
+import com.mackenzie_o.simpleciphers.Fragments.*;
 
 import java.util.Random;
 

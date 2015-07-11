@@ -28,18 +28,17 @@ public class Keyword extends Ciphers {
     // gets the corresponding character from the plaintext/ciphertext table
     private static String getChar(char in, char[] table, boolean keepCharacters, boolean encode) {
         boolean isCapitalized = isCapitalized(in);
-        char loweredIn = ("" + in).toLowerCase().charAt(0);
+        char loweredIn = lowerChar(in);
         int index = getIndex(loweredIn, encode, table);
         if (index == -1) {
-            // TODO: all of these conversions make me sad :(
-            if (keepCharacters) return in + "";
+            if (keepCharacters) return charToString(in);
             else return "";
         } else if (encode) {
-            if (isCapitalized) return (table[index] + "").toUpperCase();
-            else return table[index] + "";
+            if (isCapitalized) return charToString(table[index]).toUpperCase();
+            else return charToString(table[index]);
         } else {
-            if (isCapitalized) return UPPER_ALPHABET[index] + "";
-            else return ALPHABET[index] + "";
+            if (isCapitalized) return charToString(UPPER_ALPHABET[index]);
+            else return charToString(ALPHABET[index]);
         }
     }
 
