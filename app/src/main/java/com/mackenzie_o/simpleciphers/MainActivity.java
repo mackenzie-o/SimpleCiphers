@@ -190,7 +190,7 @@ public class MainActivity extends ActionBarActivity
             default:
                 return;
         }
-        if (modeToggle.isChecked()) { //change to decrypt mode
+        if (modeToggle.isChecked()) { // change to decrypt mode
             plaintext.setHint(R.string.ciphertext_enter_hint);
             ciphertext.setText(R.string.plaintext_display_hint);
             goButton.setText("Decrypt");
@@ -198,7 +198,7 @@ public class MainActivity extends ActionBarActivity
                 ((TextView) findViewById(R.id.shiftIndicator)).setText("\tA -> Z");
                 ((EditText) findViewById(R.id.shiftNum)).setText("");
             }
-        } else {                      //change to encrypt mode
+        } else {                      // change to encrypt mode
             plaintext.setHint(R.string.plaintext_enter_hint);
             ciphertext.setText(R.string.ciphertext_display_hint);
             goButton.setText("Encrypt");
@@ -254,7 +254,6 @@ public class MainActivity extends ActionBarActivity
         }catch(Exception e){
             return false;
         }
-        
     }
     
     public void aboutTitle(View view){

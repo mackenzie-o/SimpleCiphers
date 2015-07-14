@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".8">
+        android:layout_weight=".8"
+        android:onClick="aboutTitle">
         
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +22,6 @@
             android:textStyle="bold"
             android:textColor="#00968d"
             android:layout_gravity="center"
-            android:onClick="aboutTitle"
             android:id="@+id/appTitle" />
         
         </LinearLayout>
@@ -30,7 +30,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight=".2">
+        android:layout_weight=".2"
+        android:onClick="aboutAuthor">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +41,6 @@
             android:layout_gravity="top"
             android:gravity="center"
             android:layout_weight=".6"
-            android:onClick="aboutAuthor"
             android:id="@+id/author"/>
         
         <TextView

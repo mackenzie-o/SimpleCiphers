@@ -34,7 +34,7 @@ public class Affine extends Ciphers {
         } else if (encode) {
             if (isCapitalized) return charToString(UPPER_ALPHABET[(a * index + b) % 26]);
             else return charToString(ALPHABET[(a * index + b) % 26]);
-        } else { // TODO: fixed?
+        } else {
             int inverse = modMultiInverse(a);
             int newIndex = (inverse * (index - b)) % 26;
             if (newIndex < 0) {
