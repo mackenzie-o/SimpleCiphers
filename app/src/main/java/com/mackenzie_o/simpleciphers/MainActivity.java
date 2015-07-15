@@ -35,16 +35,19 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    /**
-     * Different fragments
-     */
-    private Fragment about = new AboutFragment(),
-            caesar = new CaesarFragment(),
-            vigenere = new VigenereFragment(),
-            autokey = new AutokeyFragment(),
-            keyword = new KeywordFragment(),
-            affine = new AffineFragment();
-    
+    // Stores the title, fragment object, and about dialog message for each item in the nav bar
+    NavItem[] navItems;
+    class NavItem {
+        String title;
+        String about;
+        Fragment fragment;
+
+        public NavItem(String title, String about, Fragment fragment) {
+            this.title = title;
+            this.about = about;
+            this.fragment = fragment;
+        }
+    }
 
     /*Navigation*/
     @Override
@@ -68,49 +71,47 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .replace(R.id.container, getSelectedTab(position + 1))
+                .replace(R.id.container, getSelectedTab(position))
                 .commit();
     }
 
+    private void createNavList() {
+        navItems = new NavItem[6];
+
+        navItems[0] = new NavItem(getString(R.string.about_title),
+                "", new AboutFragment());
+        navItems[1] = new NavItem(getString(R.string.caesar_title),
+                getString(R.string.about_caesar), new CaesarFragment());
+        navItems[2] = new NavItem(getString(R.string.vigenere_title),
+                getString(R.string.about_vigenere), new VigenereFragment());
+        navItems[3] = new NavItem(getString(R.string.autokey_title),
+                getString(R.string.about_autokey), new AutokeyFragment());
+        navItems[4] = new NavItem(getString(R.string.keyword_title),
+                getString(R.string.about_keyword), new KeywordFragment());
+        navItems[5] = new NavItem(getString(R.string.affine_title),
+                getString(R.string.about_affine), new AffineFragment());
+
+        // add new fragments here and in NavigationDrawerFragment
+
+    }
+
     public Fragment getSelectedTab(int selection) {
-        switch (selection) {
-            case 1:
-                return about;
-            case 2:
-                return caesar;
-            case 3:
-                return vigenere;
-            case 4:
-                return autokey;
-            case 5:
-                return keyword;
-            case 6:
-                return affine;
-            default:
-                return null;
+        if (navItems == null) {
+            createNavList();
         }
+        if (selection >= navItems.length) {
+            return null;
+        }
+        return navItems[selection].fragment;
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-            case 4:
-                mTitle = getString(R.string.title_section4);
-                break;
-            case 5:
-                mTitle = getString(R.string.title_section5);
-                break;
-            case 6:
-                mTitle = getString(R.string.title_section6);
-                break;
+        if (navItems == null) {
+            createNavList();
+        }
+        int selection = number - 1;
+        if (selection < navItems.length) {
+            mTitle = navItems[selection].title;
         }
     }
 
@@ -128,7 +129,7 @@ public class MainActivity extends ActionBarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             restoreActionBar();
-            if (getSupportActionBar().getTitle().equals("About")){
+            if (getSupportActionBar().getTitle().equals(R.string.about_title)) {
                 getMenuInflater().inflate(R.menu.main, menu);
             } else {
                 getMenuInflater().inflate(R.menu.main_cipher, menu);
@@ -146,8 +147,8 @@ public class MainActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
-    
-    
+
+
     /*onClick Methods*/
     public void toggleMode(View view) {
         ToggleButton modeToggle;
@@ -211,27 +212,15 @@ public class MainActivity extends ActionBarActivity
 
     public void createAboutDialog(MenuItem menu) {
         Bundle args = new Bundle();
-        args.putString("title", "About The "+mTitle.toString()+" Cipher");
-        String message;
-        switch (mTitle.toString()){
-            case "Caesar Shift":
-                message = getString(R.string.about_caesar);
-                break;
-            case "Vigenère":
-                message = getString(R.string.about_vigenere);
-                break;
-            case "Autokey":
-                message = getString(R.string.about_autokey);
-                break;
-            case "Keyword":
-                message = getString(R.string.about_keyword);
-                break;
-            case "Affine":
-                message = getString(R.string.about_affine);
-                break;
-            default:
-               message = "I made a mistake. Sorry...";
+        String title = mTitle.toString();
+        args.putString("title", "About The " + title + " Cipher");
+        String message = "I made a mistake. Sorry...";
+        for (int i = 0; i < navItems.length; i++) {
+            if (title.equals(navItems[i].title)) {
+                message = navItems[i].about;
+            }
         }
+
         args.putString("body", message);
         DialogFragment newFragment = new AboutDialogFragment();
         newFragment.setArguments(args);
@@ -246,41 +235,41 @@ public class MainActivity extends ActionBarActivity
         }
         return cleanedKey;
     }
-    
-    public boolean checkInt(EditText num){
-        try{
+
+    public boolean checkInt(EditText num) {
+        try {
             Integer.parseInt(num.getText().toString());
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
-    
-    public void aboutTitle(View view){
+
+    public void aboutTitle(View view) {
         TextView title = (TextView) findViewById(R.id.appTitle);
         String titleContent = title.getText().toString();
         Random rand = new Random();
-        if(titleContent == getString(R.string.app_title)){
-            title.setText(Caesar.caesarShift(getString(R.string.app_title), rand.nextInt(25)+1,
+        if (titleContent == getString(R.string.app_title)) {
+            title.setText(Caesar.caesarShift(getString(R.string.app_title), rand.nextInt(25) + 1,
                     true, true, true));
-        }else{
+        } else {
             title.setText(getString(R.string.app_title));
         }
     }
-    
-    public void aboutAuthor(View view){
+
+    public void aboutAuthor(View view) {
         TextView title = (TextView) findViewById(R.id.author);
         String titleContent = title.getText().toString();
         Random rand = new Random();
-        String [] keys = {"me", "myself", "andi"};
-        if(titleContent == getString(R.string.author)){
+        String[] keys = {"me", "myself", "andi"};
+        if (titleContent == getString(R.string.author)) {
             title.setText(Autokey.autokeyShift(getString(R.string.author), keys[rand.nextInt(3)],
                     true, true, true));
-        }else{
+        } else {
             title.setText(getString(R.string.author));
         }
     }
-    
+
     /* Compute Methods */
     public void computeCaesarShift(View view) {
         EditText plainText = (EditText) findViewById(R.id.caesarPlainText);
@@ -289,11 +278,11 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.caesarModeToggle);
-        if(!checkInt(shiftNum)){
+        if (!checkInt(shiftNum)) {
             Toast.makeText(getApplicationContext(), R.string.bad_int_error,
                     Toast.LENGTH_SHORT).show();
             return;
-        } else if (plainText.getText().toString().length() == 0){
+        } else if (plainText.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.no_message_error,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -302,6 +291,7 @@ public class MainActivity extends ActionBarActivity
                 Integer.parseInt(shiftNum.getText().toString()),
                 !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
+
     public void computeVigenere(View view) {
         EditText key = (EditText) findViewById(R.id.key);
         String keyText = checkKey(key.getText().toString().toLowerCase());
@@ -310,7 +300,7 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.vigenereModeToggle);
-        if(keyText.length() == 0) {
+        if (keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -322,6 +312,7 @@ public class MainActivity extends ActionBarActivity
         cipherText.setText(Vigenere.vigenereShift(plainText.getText().toString(),
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
+
     public void computeAutokey(View view) {
         EditText key = (EditText) findViewById(R.id.key);
         String keyText = checkKey(key.getText().toString().toLowerCase());
@@ -330,7 +321,7 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.autokeyModeToggle);
-        if(keyText.length() == 0) {
+        if (keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -343,6 +334,7 @@ public class MainActivity extends ActionBarActivity
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
 
     }
+
     public void computeKeyword(View view) {
         EditText key = (EditText) findViewById(R.id.key);
         String keyText = checkKey(key.getText().toString().toLowerCase());
@@ -351,7 +343,7 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.keywordModeToggle);
-        if(keyText.length() == 0) {
+        if (keyText.length() == 0) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;
@@ -363,6 +355,7 @@ public class MainActivity extends ActionBarActivity
         cipherText.setText(Keyword.keywordCipher(plainText.getText().toString(),
                 keyText, !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
     }
+
     public void computeAffineShift(View view) {
         Spinner selection = (Spinner) findViewById(R.id.multi_spinner);
         EditText plainText = (EditText) findViewById(R.id.affinePlainText);
@@ -371,7 +364,7 @@ public class MainActivity extends ActionBarActivity
         ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
         ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
         ToggleButton mode = (ToggleButton) findViewById(R.id.affineModeToggle);
-        if(!checkInt(shiftNum)) {
+        if (!checkInt(shiftNum)) {
             Toast.makeText(getApplicationContext(), R.string.empty_key_error,
                     Toast.LENGTH_SHORT).show();
             return;

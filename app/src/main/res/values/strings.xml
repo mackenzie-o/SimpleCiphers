@@ -2,12 +2,12 @@
 <resources>
     <!-- Nav bar -->
     <string name="app_name">Simple Ciphers</string>
-    <string name="title_section1">About</string>
-    <string name="title_section2">Caesar Shift</string>
-    <string name="title_section3">Vigenère</string>
-    <string name="title_section4">Autokey</string>
-    <string name="title_section5">Keyword</string>
-    <string name="title_section6">Affine</string>
+    <string name="about_title">About</string>
+    <string name="caesar_title">Caesar Shift</string>
+    <string name="vigenere_title">Vigenère</string>
+    <string name="autokey_title">Autokey</string>
+    <string name="keyword_title">Keyword</string>
+    <string name="affine_title">Affine</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>

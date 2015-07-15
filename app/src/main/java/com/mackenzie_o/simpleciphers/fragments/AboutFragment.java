@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.mackenzie_o.simpleciphers.MainActivity;
 import com.mackenzie_o.simpleciphers.R;
@@ -14,7 +18,6 @@ import com.mackenzie_o.simpleciphers.R;
  * Created by MacKenzie_2 on 1/3/2015.
  */
 public class AboutFragment extends Fragment {
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
