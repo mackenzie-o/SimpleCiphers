@@ -1,13 +1,16 @@
 package com.mackenzie_o.simpleciphers.ciphers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The Keyword class implements the keyword monoalphabetic substitution cipher.
- *
+ * <p/>
  * The keyword cipher is encodes messages by creating a table based around a keyword.
  * The first n letters of the alphabet, where n is the length of the keyword, are
  * mapped to the keyword. The remaining letters of the alphabet are mapped to the
  * letters not used by the keyword.
- *
+ * <p/>
  * For example, the table created with the keyword 'cipher' would be:
  * [ a b c d e f g h i j k l m n o p q r s t u v w x y z ]
  * [ c i p h e r a b d f g j k l m n o q s t u v w x y z ]
@@ -17,7 +20,7 @@ public class Keyword extends Ciphers {
     // applies a keyword cipher on the provided string with the given options and returns the result
     public static String keywordCipher(String message, String key, boolean persistCaps, boolean keepCharacters, boolean encode) {
         String out = "";
-        char[] table = createTable(key.toLowerCase());
+        char[] table = createTable(removeDuplicates(key.toLowerCase()));
         if (!persistCaps) message = message.toLowerCase();
         for (int i = 0; i < message.length(); i++) {
             out += getChar(message.charAt(i), table, keepCharacters, encode);
@@ -57,12 +60,27 @@ public class Keyword extends Ciphers {
         }
     }
 
+    // removes any duplicate characters in the key
+    private static String removeDuplicates(String in) {
+        HashMap used = new HashMap();
+        char[] letters = in.toCharArray();
+        String out = "";
+        for (int i = 0; i < letters.length; i++) {
+            if (!used.containsKey(letters[i])) {
+                out += letters[i];
+                used.put(letters[i], true);
+            }
+        }
+        return out;
+    }
+
     // creates a ciphertext table from a given key
     private static char[] createTable(String key) {
         char[] table = new char[26];
         char[] alpha = ALPHABET.clone();
-        for (int i = 0; i < key.length(); i++) {
-            table[i] = key.charAt(i);
+        char[] keyArr = key.toCharArray();
+        for (int i = 0; i < keyArr.length; i++) {
+            table[i] = keyArr[i];
             for (int j = 0; j < 26; j++) {
                 if (alpha[j] == table[i]) {
                     alpha[j] = NULLCHAR;
@@ -70,7 +88,7 @@ public class Keyword extends Ciphers {
                 }
             }
         }
-        int index = key.length();
+        int index = keyArr.length;
         for (int i = 0; i < 26; i++) {
             if (alpha[i] != NULLCHAR) {
                 table[index] = alpha[i];

@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity
 
     // Stores the title, fragment object, and about dialog message for each item in the nav bar
     NavItem[] navItems;
+
     class NavItem {
         String title;
         String about;
