@@ -24,7 +24,7 @@ public class KeywordFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(5);
+        ((MainActivity) activity).onSectionAttached(4);
 
     }
 }

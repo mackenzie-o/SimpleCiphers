@@ -24,7 +24,7 @@ public class AffineFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(6);
+        ((MainActivity) activity).onSectionAttached(5);
 
     }
 

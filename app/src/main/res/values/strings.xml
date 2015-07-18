@@ -8,6 +8,7 @@
     <string name="autokey_title">Autokey</string>
     <string name="keyword_title">Keyword</string>
     <string name="affine_title">Affine</string>
+    <string name="rail_title">Rail Fence</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
@@ -33,6 +34,8 @@
     <string name="key_hint">keyword</string>
     <string name="shift_num_hint">shift #</string>
     <string name="affine_multi_hint">select a multiplier</string>
+    <string name="rail_num_hint">number of rails</string>
+    <string name="diagram_example">F ~ ~ ~ e ~ ~ ~ g ~ ~ ~\n~ e ~ c ~ D ~ a ~ r ~ m\n~ ~ n ~ ~ ~ i ~ ~ ~ a ~</string>
     
     <!-- Errors & Notifications -->
     <string name="key_fixed_notification">nonalphabetic characters removed from keyword</string>
@@ -69,6 +72,8 @@
         must be coprime. As a result the options for a in the english alphabet are 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25.\n
         It is worth noting that an encryption where a=1 is equivalent to a Caesar Shift of b, and an encryption where a=b=(26-1) is also
         known as the Atbash Cipher. \n\nMore info: wikipedia.org/wiki/Affine_cipher
+    </string>
+    <string name="about_rail">I didn\'t write this. I\'m sorry.
     </string>
 
     <!-- Dropdown Options -->

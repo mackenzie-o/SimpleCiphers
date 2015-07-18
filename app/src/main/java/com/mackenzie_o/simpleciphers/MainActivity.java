@@ -76,7 +76,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void createNavList() {
-        navItems = new NavItem[6];
+        navItems = new NavItem[7];
 
         navItems[0] = new NavItem(getString(R.string.about_title),
                 "", new AboutFragment());
@@ -90,6 +90,8 @@ public class MainActivity extends ActionBarActivity
                 getString(R.string.about_keyword), new KeywordFragment());
         navItems[5] = new NavItem(getString(R.string.affine_title),
                 getString(R.string.about_affine), new AffineFragment());
+        navItems[6] = new NavItem(getString(R.string.rail_title),
+                getString(R.string.about_rail), new RailFragment());
 
         // add new fragments here and in NavigationDrawerFragment
 
@@ -109,9 +111,8 @@ public class MainActivity extends ActionBarActivity
         if (navItems == null) {
             createNavList();
         }
-        int selection = number - 1;
-        if (selection < navItems.length) {
-            mTitle = navItems[selection].title;
+        if (number < navItems.length) {
+            mTitle = navItems[number].title;
         }
     }
 
@@ -129,7 +130,7 @@ public class MainActivity extends ActionBarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             restoreActionBar();
-            if (getSupportActionBar().getTitle().equals(R.string.about_title)) {
+            if (getSupportActionBar().getTitle().equals("About")) {
                 getMenuInflater().inflate(R.menu.main, menu);
             } else {
                 getMenuInflater().inflate(R.menu.main_cipher, menu);
@@ -187,6 +188,12 @@ public class MainActivity extends ActionBarActivity
                 plaintext = (EditText) findViewById(R.id.affinePlainText);
                 ciphertext = (TextView) findViewById(R.id.affineCipherText);
                 goButton = (Button) findViewById(R.id.affineGo);
+                break;
+            case R.id.railModeToggle:
+                modeToggle = (ToggleButton) findViewById(R.id.railModeToggle);
+                plaintext = (EditText) findViewById(R.id.railPlainText);
+                ciphertext = (TextView) findViewById(R.id.railCipherText);
+                goButton = (Button) findViewById(R.id.railGo);
                 break;
             default:
                 return;
@@ -377,5 +384,30 @@ public class MainActivity extends ActionBarActivity
                 Integer.parseInt(selection.getSelectedItem().toString()),
                 Integer.parseInt(shiftNum.getText().toString()),
                 !capitals.isChecked(), !characters.isChecked(), !mode.isChecked()));
+    }
+
+    public void computeRailFence(View view) {
+        EditText plainText = (EditText) findViewById(R.id.railPlainText);
+        TextView cipherText = (TextView) findViewById(R.id.railCipherText);
+        TextView railDiagram = (TextView) findViewById(R.id.railDiagram);
+        EditText railNum = (EditText) findViewById(R.id.railNum);
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        ToggleButton mode = (ToggleButton) findViewById(R.id.railModeToggle);
+        if (!checkInt(railNum)) {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (plainText.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), R.string.no_message_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        boolean encode = !mode.isChecked();
+        RailFence fence = new RailFence(plainText.getText().toString(),
+                Integer.parseInt(railNum.getText().toString()),
+                !capitals.isChecked(), !characters.isChecked(), encode);
+        railDiagram.setText(fence.railFenceDiagram());
+        cipherText.setText(encode ? fence.getCiphertext() : fence.getPlaintext());
     }
 }

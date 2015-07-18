@@ -3,13 +3,19 @@ package com.mackenzie_o.simpleciphers.ciphers;
 /**
  * TODO: comment
  */
-class RailFence extends Ciphers{
+public class RailFence extends Ciphers{
     String plaintext;
     String ciphertext;
     int rails;
     char[][] fence;
 
-    public RailFence(String message, int key, boolean keepCharacters, boolean encode) {
+    public RailFence(String message, int key, boolean persistCaps, boolean keepCharacters, boolean encode) {
+        if (!persistCaps) {
+            message = message.toLowerCase();
+        }
+        if (!keepCharacters) {
+            message = removeNonalphabeticChars(message);
+        }
         this.rails = key;
         if (encode) {
             this.plaintext = message;
@@ -26,7 +32,7 @@ class RailFence extends Ciphers{
         for (int i = 0; i < rails; i++) {
             for (int j = 0; j < fence[i].length; j++) {
                 if (fence[i][j] != NULLCHAR) out += fence[i][j] + " ";
-                else out += "` ";
+                else out += "~ ";
             }
             out += "\n";
         }
