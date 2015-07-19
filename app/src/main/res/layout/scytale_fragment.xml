@@ -34,7 +34,7 @@
             android:onClick="toggleMode"
             android:textOff="@string/mode_encrypt"
             android:textOn="@string/mode_decrypt"
-            android:id="@+id/railModeToggle" />
+            android:id="@+id/scytaleModeToggle" />
 
     </LinearLayout>
 
@@ -46,7 +46,7 @@
         android:paddingTop="@dimen/textbox_padding"
         android:paddingBottom="@dimen/textbox_padding"
         android:layout_weight="1"
-        android:id="@+id/railPlainText"
+        android:id="@+id/scytalePlainText"
         android:imeOptions="actionDone"
         android:hint="@string/plaintext_enter_hint"
         android:gravity="start"
@@ -64,8 +64,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:ems="10"
-            android:id="@+id/railNum"
-            android:hint="@string/rail_num_hint"
+            android:id="@+id/scytaleNum"
+            android:hint="@string/scytale_width_num_hint"
             android:layout_weight="1" />
 
         <Button
@@ -73,9 +73,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_height="wrap_content"
-            android:id="@+id/railGo"
+            android:id="@+id/scytaleGo"
             android:text="Encrypt"
-            android:onClick="computeRailFence"
+            android:onClick="computeScytale"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -95,8 +95,8 @@
             android:selectAllOnFocus="true"
             android:textIsSelectable="true"
             android:typeface="monospace"
-            android:text="@string/rail_diagram_example"
-            android:id="@+id/railDiagram"/>
+            android:text="@string/scytale_diagram_example"
+            android:id="@+id/scytaleDiagram"/>
     </HorizontalScrollView>
 
     <TextView
@@ -111,7 +111,7 @@
         android:layout_weight="1"
         android:background="#E0E0E0"
         android:text="@string/ciphertext_display_hint"
-        android:id="@+id/railCipherText"
+        android:id="@+id/scytaleCipherText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 

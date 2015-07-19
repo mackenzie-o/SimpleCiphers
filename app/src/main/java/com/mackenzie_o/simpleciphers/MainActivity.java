@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void createNavList() {
-        navItems = new NavItem[7];
+        navItems = new NavItem[8];
 
         navItems[0] = new NavItem(getString(R.string.about_title),
                 "", new AboutFragment());
@@ -92,7 +92,9 @@ public class MainActivity extends ActionBarActivity
         navItems[5] = new NavItem(getString(R.string.affine_title),
                 getString(R.string.about_affine), new AffineFragment());
         navItems[6] = new NavItem(getString(R.string.rail_title),
-                getString(R.string.about_rail), new RailFragment());
+                getString(R.string.about_placeholder), new RailFragment());
+        navItems[7] = new NavItem(getString(R.string.scytale_title),
+                getString(R.string.about_placeholder), new ScytaleFragment());
 
         // add new fragments here and in NavigationDrawerFragment
 
@@ -195,6 +197,12 @@ public class MainActivity extends ActionBarActivity
                 plaintext = (EditText) findViewById(R.id.railPlainText);
                 ciphertext = (TextView) findViewById(R.id.railCipherText);
                 goButton = (Button) findViewById(R.id.railGo);
+                break;
+            case R.id.scytaleModeToggle:
+                modeToggle = (ToggleButton) findViewById(R.id.scytaleModeToggle);
+                plaintext = (EditText) findViewById(R.id.scytalePlainText);
+                ciphertext = (TextView) findViewById(R.id.scytaleCipherText);
+                goButton = (Button) findViewById(R.id.scytaleGo);
                 break;
             default:
                 return;
@@ -410,5 +418,30 @@ public class MainActivity extends ActionBarActivity
                 !capitals.isChecked(), !characters.isChecked(), encode);
         railDiagram.setText(fence.railFenceDiagram());
         cipherText.setText(encode ? fence.getCiphertext() : fence.getPlaintext());
+    }
+
+    public void computeScytale(View view) {
+        EditText plainText = (EditText) findViewById(R.id.scytalePlainText);
+        TextView cipherText = (TextView) findViewById(R.id.scytaleCipherText);
+        TextView scytaleDiagram = (TextView) findViewById(R.id.scytaleDiagram);
+        EditText scytaleNum = (EditText) findViewById(R.id.scytaleNum);
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        ToggleButton mode = (ToggleButton) findViewById(R.id.scytaleModeToggle);
+        if (!checkInt(scytaleNum)) {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (plainText.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), R.string.no_message_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        boolean encode = !mode.isChecked();
+        Scytale scy = new Scytale(plainText.getText().toString(),
+                Integer.parseInt(scytaleNum.getText().toString()),
+                !capitals.isChecked(), !characters.isChecked(), encode);
+        scytaleDiagram.setText(scy.rodDiagram());
+        cipherText.setText(encode ? scy.getCiphertext() : scy.getPlaintext());
     }
 }

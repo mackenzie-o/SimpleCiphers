@@ -9,6 +9,7 @@
     <string name="keyword_title">Keyword</string>
     <string name="affine_title">Affine</string>
     <string name="rail_title">Rail Fence</string>
+    <string name="scytale_title">Scytale</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>
@@ -35,7 +36,9 @@
     <string name="shift_num_hint">shift #</string>
     <string name="affine_multi_hint">select a multiplier</string>
     <string name="rail_num_hint">number of rails</string>
-    <string name="diagram_example">F ~ ~ ~ e ~ ~ ~ g ~ ~ ~\n~ e ~ c ~ D ~ a ~ r ~ m\n~ ~ n ~ ~ ~ i ~ ~ ~ a ~</string>
+    <string name="rail_diagram_example">F ~ ~ ~ e ~ ~ ~ g ~ ~ ~\n~ e ~ c ~ D ~ a ~ r ~ m\n~ ~ n ~ ~ ~ i ~ ~ ~ a ~</string>
+    <string name="scytale_width_num_hint">scytale width</string>
+    <string name="scytale_diagram_example">|t|h|i|s| |i|s| |\n|a|n| |e|x|a|m|p|\n|l|e| |d|i|a|g|r|\n|a|m|~|~|~|~|~|~|</string>
     
     <!-- Errors & Notifications -->
     <string name="key_fixed_notification">nonalphabetic characters removed from keyword</string>
@@ -73,7 +76,7 @@
         It is worth noting that an encryption where a=1 is equivalent to a Caesar Shift of b, and an encryption where a=b=(26-1) is also
         known as the Atbash Cipher. \n\nMore info: wikipedia.org/wiki/Affine_cipher
     </string>
-    <string name="about_rail">I didn\'t write this. I\'m sorry.
+    <string name="about_placeholder">I didn\'t write this. I\'m sorry.
     </string>
 
     <!-- Dropdown Options -->
