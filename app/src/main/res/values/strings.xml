@@ -10,6 +10,7 @@
     <string name="affine_title">Affine</string>
     <string name="rail_title">Rail Fence</string>
     <string name="scytale_title">Scytale</string>
+    <string name="beaufont_title">Beaufont</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">about this cipher</string>

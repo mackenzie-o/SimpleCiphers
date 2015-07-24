@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void createNavList() {
-        navItems = new NavItem[8];
+        navItems = new NavItem[9];
 
         navItems[0] = new NavItem(getString(R.string.about_title),
                 "", new AboutFragment());
@@ -95,6 +95,8 @@ public class MainActivity extends ActionBarActivity
                 getString(R.string.about_placeholder), new RailFragment());
         navItems[7] = new NavItem(getString(R.string.scytale_title),
                 getString(R.string.about_placeholder), new ScytaleFragment());
+        navItems[8] = new NavItem(getString(R.string.beaufont_title),
+                getString(R.string.about_placeholder), new BeaufontFragment());
 
         // add new fragments here and in NavigationDrawerFragment
 
@@ -203,6 +205,12 @@ public class MainActivity extends ActionBarActivity
                 plaintext = (EditText) findViewById(R.id.scytalePlainText);
                 ciphertext = (TextView) findViewById(R.id.scytaleCipherText);
                 goButton = (Button) findViewById(R.id.scytaleGo);
+                break;
+            case R.id.beaufontModeToggle:
+                modeToggle = (ToggleButton) findViewById(R.id.beaufontModeToggle);
+                plaintext = (EditText) findViewById(R.id.beaufontPlainText);
+                ciphertext = (TextView) findViewById(R.id.beaufontCipherText);
+                goButton = (Button) findViewById(R.id.beaufontGo);
                 break;
             default:
                 return;
@@ -443,5 +451,25 @@ public class MainActivity extends ActionBarActivity
                 !capitals.isChecked(), !characters.isChecked(), encode);
         scytaleDiagram.setText(scy.rodDiagram());
         cipherText.setText(encode ? scy.getCiphertext() : scy.getPlaintext());
+    }
+
+    public void computeBeaufont(View view) {
+        EditText key = (EditText) findViewById(R.id.key);
+        String keyText = checkKey(key.getText().toString().toLowerCase());
+        EditText plainText = (EditText) findViewById(R.id.beaufontPlainText);
+        TextView cipherText = (TextView) findViewById(R.id.beaufontCipherText);
+        ToggleButton capitals = (ToggleButton) findViewById(R.id.caseToggle);
+        ToggleButton characters = (ToggleButton) findViewById(R.id.characterToggle);
+        if (keyText.length() == 0) {
+            Toast.makeText(getApplicationContext(), R.string.empty_key_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        } else if (plainText.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), R.string.no_message_error,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        cipherText.setText(Beaufont.beaufontCipher(plainText.getText().toString(),
+                keyText, !capitals.isChecked(), !characters.isChecked()));
     }
 }

@@ -111,7 +111,8 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.keyword_title),
                         getString(R.string.affine_title),
                         getString(R.string.rail_title),
-                        getString(R.string.scytale_title)}));
+                        getString(R.string.scytale_title),
+                        getString(R.string.beaufont_title)}));
         // Add new fragment titles here and in MainActivity's navItems
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
